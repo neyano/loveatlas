@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\Api;
 use App\Http\Controllers\Api\FavoriteController as ApiFavoriteController;
 use App\Http\Controllers\Api\SearchController as ApiSearchController;
 use App\Http\Controllers\Api\VisitController as ApiVisitController;
@@ -67,14 +69,45 @@ Route::prefix('v1')->group(function () {
     // TODO: Step 5
     // Route::get('/works', [Api\WorkController::class, 'index']);
     // Route::get('/works/search', [Api\WorkController::class, 'search']);
+  
+    // 検索 API (公開)
+    // TODO: Step 7
+    // Route::get('/search', [Api\SearchController::class, 'index']);
 
-    // 管理者 API
-    // Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
-    //     // Route::get('/quotes/pending', [Api\Admin\QuoteController::class, 'pending']);
-    //     // Route::put('/quotes/{quote}/approve', [Api\Admin\QuoteController::class, 'approve']);
-    //     // Route::put('/quotes/{quote}/reject', [Api\Admin\QuoteController::class, 'reject']);
-    //     // Route::get('/reports', [Api\Admin\ReportController::class, 'index']);
-    //     // Route::put('/reports/{report}', [Api\Admin\ReportController::class, 'update']);
-    //     // Route::get('/stats', [Api\Admin\StatsController::class, 'index']);
-    // });
+    // 要認証 API
+    Route::middleware('auth:sanctum')->group(function () {
+        // セリフ投稿・編集 (TODO: Group C)
+        // Route::post('/quotes', [Api\QuoteController::class, 'store']);
+        // Route::put('/quotes/{quote}', [Api\QuoteController::class, 'update']);
+        // Route::delete('/quotes/{quote}', [Api\QuoteController::class, 'destroy']);
+        // Route::post('/quotes/{quote}/vote', [Api\VoteController::class, 'toggle']);
+
+        // お気に入り (TODO: Group D)
+        // Route::get('/favorites', [Api\FavoriteController::class, 'index']);
+        // Route::post('/favorites', [Api\FavoriteController::class, 'store']);
+        // Route::delete('/favorites/{quote}', [Api\FavoriteController::class, 'destroy']);
+
+        // 訪問記録 (TODO: Group D)
+        // Route::apiResource('visits', Api\VisitController::class);
+
+        // 作品登録 (TODO: Group C)
+        // Route::post('/works', [Api\WorkController::class, 'store']);
+
+        // 通報 (Group E)
+        Route::post('/reports', [Api\ReportController::class, 'store']);
+    });
+
+    // 管理者 API (Group E)
+    Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+        Route::get('/quotes/pending', [Admin\QuoteController::class, 'pending']);
+        Route::put('/quotes/{quote}/approve', [Admin\QuoteController::class, 'approve']);
+        Route::put('/quotes/{quote}/reject', [Admin\QuoteController::class, 'reject']);
+        Route::get('/reports', [Admin\ReportController::class, 'index']);
+        Route::put('/reports/{report}', [Admin\ReportController::class, 'update']);
+        Route::get('/stats', [Admin\StatsController::class, 'index']);
+        Route::get('/users', [Admin\UserController::class, 'index']);
+        Route::put('/users/{user}/role', [Admin\UserController::class, 'updateRole']);
+        Route::put('/users/{user}/ban', [Admin\UserController::class, 'ban']);
+    });
+
 });

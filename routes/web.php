@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VisitController;
@@ -53,13 +54,10 @@ Route::middleware('auth')->group(function () {
     // Route::get('/users/{user}', [ProfileController::class, 'show'])->name('users.show');
 });
 
-// --- 管理者ページ ---
-// Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-//     // TODO: Step 8 - 管理画面
-//     // Route::get('/', [Admin\DashboardController::class, 'index'])->name('dashboard');
-//     // Route::get('/quotes', [Admin\QuoteController::class, 'index'])->name('quotes.index');
-//     // Route::get('/reports', [Admin\ReportController::class, 'index'])->name('reports.index');
-//     // Route::get('/users', [Admin\UserController::class, 'index'])->name('users.index');
-//     // Route::get('/works', [Admin\WorkController::class, 'index'])->name('works.index');
-//     // Route::get('/stats', [Admin\StatsController::class, 'index'])->name('stats.index');
-// });
+// --- 管理者ページ (Group E) ---
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', function () { return view('admin.dashboard'); })->name('dashboard');
+    Route::get('/quotes', function () { return view('admin.quotes.index'); })->name('quotes.index');
+    Route::get('/reports', function () { return view('admin.reports.index'); })->name('reports.index');
+    Route::get('/users', function () { return view('admin.users.index'); })->name('users.index');
+});
