@@ -84,5 +84,11 @@ Route::prefix('v1')->group(function () {
         Route::get('/users', [Admin\UserController::class, 'index']);
         Route::put('/users/{user}/role', [Admin\UserController::class, 'updateRole']);
         Route::put('/users/{user}/ban', [Admin\UserController::class, 'ban']);
+        Route::get('/works', [Admin\WorkController::class, 'index']);
+        Route::post('/works', [Admin\WorkController::class, 'store']);
+        Route::put('/works/{work}', [Admin\WorkController::class, 'update']);
+        Route::delete('/works/{work}', [Admin\WorkController::class, 'destroy']);
+        Route::put('/works/{work}/approve', [Admin\WorkController::class, 'approve']);
+        Route::get('/works/{work}/quotes', [Admin\WorkController::class, 'quotes']);
     });
 });

@@ -3,7 +3,6 @@
 @section('title', 'ダッシュボード')
 
 @section('content')
-<div id="app">
     <div class="admin-stats">
         <div class="admin-stats__grid">
             <div class="card admin-stats__card">
@@ -27,7 +26,6 @@
             </div>
         </div>
     </div>
-</div>
 
 @push('styles')
 <style>

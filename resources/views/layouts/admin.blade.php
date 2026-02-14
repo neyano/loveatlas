@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css'])
     @stack('styles')
 </head>
 <body class="admin">
@@ -25,7 +25,6 @@
             <a href="/admin/reports" class="admin-sidebar__link">通報管理</a>
             <a href="/admin/users" class="admin-sidebar__link">ユーザー管理</a>
             <a href="/admin/works" class="admin-sidebar__link">作品管理</a>
-            <a href="/admin/stats" class="admin-sidebar__link">統計</a>
         </nav>
         <div class="admin-sidebar__footer">
             <a href="/">サイトに戻る</a>
@@ -37,7 +36,7 @@
             <h1 class="admin-header__title">@yield('title')</h1>
         </header>
 
-        <main class="admin-content" id="app">
+        <main class="admin-content">
             @yield('content')
         </main>
     </div>

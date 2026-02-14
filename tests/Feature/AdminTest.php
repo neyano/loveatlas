@@ -222,4 +222,67 @@ class AdminTest extends TestCase
         $this->actingAs($this->user)->getJson('/api/v1/admin/users')->assertForbidden();
         $this->actingAs($this->user)->getJson('/api/v1/admin/reports')->assertForbidden();
     }
+
+    // --- Work Management ---
+
+    public function test_admin_can_create_work(): void
+    {
+        $response = $this->actingAs($this->admin)->postJson('/api/v1/admin/works', [
+            'title' => 'テスト映画',
+            'type' => 'movie',
+            'year' => 2024,
+            'country' => '日本',
+        ]);
+
+        $response->assertCreated();
+        $this->assertDatabaseHas('works', ['title' => 'テスト映画', 'type' => 'movie']);
+    }
+
+    public function test_admin_can_update_work(): void
+    {
+        $work = Work::factory()->create(['submitted_by' => $this->admin->id]);
+
+        $response = $this->actingAs($this->admin)->putJson("/api/v1/admin/works/{$work->id}", [
+            'title' => '更新された作品名',
+        ]);
+
+        $response->assertOk();
+        $this->assertDatabaseHas('works', ['id' => $work->id, 'title' => '更新された作品名']);
+    }
+
+    public function test_admin_can_delete_work(): void
+    {
+        $work = Work::factory()->create(['submitted_by' => $this->admin->id]);
+
+        $response = $this->actingAs($this->admin)->deleteJson("/api/v1/admin/works/{$work->id}");
+
+        $response->assertOk();
+        $this->assertDatabaseMissing('works', ['id' => $work->id]);
+    }
+
+    public function test_admin_can_approve_work(): void
+    {
+        $work = Work::factory()->create(['submitted_by' => $this->admin->id, 'is_approved' => false]);
+
+        $response = $this->actingAs($this->admin)->putJson("/api/v1/admin/works/{$work->id}/approve");
+
+        $response->assertOk();
+        $this->assertDatabaseHas('works', ['id' => $work->id, 'is_approved' => true]);
+    }
+
+    public function test_admin_cannot_delete_work_with_quotes(): void
+    {
+        $work = Work::factory()->create(['submitted_by' => $this->admin->id]);
+        $location = Location::factory()->create();
+        Quote::factory()->create([
+            'user_id' => $this->user->id,
+            'work_id' => $work->id,
+            'location_id' => $location->id,
+        ]);
+
+        $response = $this->actingAs($this->admin)->deleteJson("/api/v1/admin/works/{$work->id}");
+
+        $response->assertStatus(409);
+        $this->assertDatabaseHas('works', ['id' => $work->id]);
+    }
 }

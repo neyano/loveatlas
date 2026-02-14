@@ -51,4 +51,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/quotes', function () { return view('admin.quotes.index'); })->name('quotes.index');
     Route::get('/reports', function () { return view('admin.reports.index'); })->name('reports.index');
     Route::get('/users', function () { return view('admin.users.index'); })->name('users.index');
+    Route::get('/works', function () { return view('admin.works.index'); })->name('works.index');
 });
