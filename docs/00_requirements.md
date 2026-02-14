@@ -41,7 +41,9 @@
 | 項目 | 内容 |
 |------|------|
 | アプリ種別 | Webアプリケーション (レスポンシブ対応) |
+| バックエンド | Laravel 11.x (PHP 8.2) |
 | サーバー環境 | XAMPP (Apache + PHP 8.2 + MariaDB 10.4) |
+| フロントエンド | Blade テンプレート + Vite + Vanilla JS |
 | 地図サービス | Leaflet + OpenStreetMap |
 | ジオコーディング | Nominatim API |
 | 対応ブラウザ | Chrome, Firefox, Safari, Edge (最新2バージョン) |
@@ -50,9 +52,9 @@
 ### 2.3 システム構成図
 
 ```
-[ブラウザ] ──HTTP──> [Apache/PHP 8.2] ──PDO──> [MariaDB 10.4]
+[ブラウザ] ──HTTP──> [Apache / Laravel 11.x (PHP 8.2)] ──Eloquent──> [MariaDB 10.4]
     │                     │
-    │ Leaflet             │ Nominatim API
+    │ Leaflet + Vite      │ Nominatim API
     ↓                     ↓
 [OpenStreetMap]    [ジオコーディング]
 ```
@@ -187,14 +189,14 @@
 
 | 項目 | 要件 |
 |------|------|
-| 認証 | セッションベース認証。パスワードはbcryptハッシュ |
-| SQLインジェクション | PDOプリペアドステートメント必須 |
-| XSS | 出力時にhtmlspecialchars()エスケープ。CSPヘッダー設定 |
-| CSRF | フォーム・APIにCSRFトークン検証 |
-| セッション | HttpOnly Cookie、ログイン時にセッションID再生成 |
-| ファイルアップロード | 拡張子/MIMEチェック、GD再描画、ランダムファイル名 |
-| レート制限 | ログイン:5回/分、API:60回/分、投稿:10回/時 |
-| ディレクトリ保護 | publicディレクトリのみ公開 |
+| 認証 | Laravel Breeze + Sanctum。パスワードはbcryptハッシュ |
+| SQLインジェクション | Eloquent ORM / クエリビルダによるパラメータバインド |
+| XSS | Blade テンプレートの `{{ }}` 自動エスケープ。CSPヘッダー設定 |
+| CSRF | Laravel 標準の CSRF トークン検証 (`@csrf`) |
+| セッション | Laravel セッション管理。HttpOnly Cookie、暗号化 |
+| ファイルアップロード | Laravel Storage + バリデーション、Intervention Image でリサイズ |
+| レート制限 | Laravel RateLimiter (ログイン:5回/分、API:60回/分、投稿:10回/時) |
+| ディレクトリ保護 | Laravel 標準 (public ディレクトリのみ公開) |
 
 ### 4.3 可用性要件
 
@@ -218,9 +220,10 @@
 
 | 項目 | 要件 |
 |------|------|
-| コード構成 | MVCパターンによる責務分離 |
-| 命名規則 | PSR-12準拠 (PHP)、BEM (CSS) |
+| コード構成 | Laravel MVC + Service 層による責務分離 |
+| 命名規則 | Laravel 規約 + PSR-12準拠 (PHP)、BEM (CSS) |
 | バージョン管理 | Git |
+| DB管理 | Laravel Migration / Seeder でスキーマ・データをコード管理 |
 | ドキュメント | 本要件定義書、DB設計書、API仕様書を整備 |
 
 ---
@@ -326,8 +329,9 @@ REST API (JSON形式) を提供。詳細は [03_api.md](03_api.md) を参照。
 | 実行環境 | XAMPP (ローカル開発環境)。本番デプロイは別途検討 |
 | PHP バージョン | 8.2.12 |
 | DB | MariaDB 10.4.32 |
-| フレームワーク | 使用しない (カスタムMVC) |
-| フロントエンド | Vanilla JS (ES Modules)。ビルドツール不使用 |
+| フレームワーク | Laravel 11.x |
+| 認証パッケージ | Laravel Breeze + Sanctum |
+| フロントエンド | Blade + Vue 3 + Vite |
 
 ### 8.2 運用上の制約
 
