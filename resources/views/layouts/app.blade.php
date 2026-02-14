@@ -19,7 +19,7 @@
         <div class="header__inner">
             <a href="/" class="header__logo">LoveAtlas</a>
 
-            <div class="header__search">
+            <div class="header__search" id="search-bar-root">
                 @yield('search')
             </div>
 
