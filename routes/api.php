@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Api;
+use App\Http\Controllers\Api\FavoriteController as ApiFavoriteController;
+use App\Http\Controllers\Api\SearchController as ApiSearchController;
+use App\Http\Controllers\Api\VisitController as ApiVisitController;
+use App\Http\Controllers\Api\VoteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +34,26 @@ Route::prefix('v1')->group(function () {
         });
     });
 
+    // 検索 API (公開)
+    Route::get('/search', [ApiSearchController::class, 'index']);
+
+    // 要認証 API
+    Route::middleware('auth:sanctum')->group(function () {
+        // いいね
+        Route::post('/quotes/{quote}/vote', [VoteController::class, 'toggle']);
+
+        // お気に入り
+        Route::get('/favorites', [ApiFavoriteController::class, 'index']);
+        Route::post('/favorites', [ApiFavoriteController::class, 'store']);
+        Route::delete('/favorites/{favorite}', [ApiFavoriteController::class, 'destroy']);
+
+        // 訪問記録
+        Route::get('/visits', [ApiVisitController::class, 'index']);
+        Route::post('/visits', [ApiVisitController::class, 'store']);
+        Route::put('/visits/{visit}', [ApiVisitController::class, 'update']);
+        Route::delete('/visits/{visit}', [ApiVisitController::class, 'destroy']);
+    });
+
     // 地図データ API (公開)
     // TODO: Step 4
     // Route::get('/map/quotes', [Api\MapController::class, 'quotes']);
@@ -45,7 +69,7 @@ Route::prefix('v1')->group(function () {
     // TODO: Step 5
     // Route::get('/works', [Api\WorkController::class, 'index']);
     // Route::get('/works/search', [Api\WorkController::class, 'search']);
-
+  
     // 検索 API (公開)
     // TODO: Step 7
     // Route::get('/search', [Api\SearchController::class, 'index']);
@@ -91,4 +115,5 @@ Route::prefix('v1')->group(function () {
         Route::put('/works/{work}/approve', [Admin\WorkController::class, 'approve']);
         Route::get('/works/{work}/quotes', [Admin\WorkController::class, 'quotes']);
     });
+
 });
