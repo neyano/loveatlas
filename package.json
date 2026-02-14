@@ -1,4 +1,10 @@
 {
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
   "dependencies": {
     "@vitejs/plugin-vue": "^6.0.4",
     "axios": "^1.13.5",
