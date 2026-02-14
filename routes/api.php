@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Api;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FavoriteController as ApiFavoriteController;
 use App\Http\Controllers\Api\SearchController as ApiSearchController;
 use App\Http\Controllers\Api\VisitController as ApiVisitController;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// --- 認証ユーザー情報 ---
+// --- 認証ユーザー情報 (Laravel デフォルト) ---
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -27,10 +28,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // --- v1 API ---
 Route::prefix('v1')->group(function () {
 
-    // 認証 API
+    // ===== グループ B: 認証 API =====
     Route::prefix('auth')->group(function () {
-        Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
-            return $request->user();
+        Route::post('/register', [AuthController::class, 'register']);
+        Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login');
+        Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->middleware('throttle:password-reset');
+        Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('/logout', [AuthController::class, 'logout']);
+            Route::get('/me', [AuthController::class, 'me']);
         });
     });
 

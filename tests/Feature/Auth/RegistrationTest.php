@@ -13,13 +13,37 @@ class RegistrationTest extends TestCase
     {
         $response = $this->post('/register', [
             'username' => 'testuser',
+            'display_name' => 'テストユーザー',
             'email' => 'test@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-            'display_name' => 'Test User',
+            'password' => 'Password1',
+            'password_confirmation' => 'Password1',
         ]);
 
         $this->assertAuthenticated();
         $response->assertNoContent();
+    }
+
+    public function test_registration_requires_username(): void
+    {
+        $response = $this->post('/register', [
+            'display_name' => 'テストユーザー',
+            'email' => 'test@example.com',
+            'password' => 'Password1',
+            'password_confirmation' => 'Password1',
+        ]);
+
+        $response->assertSessionHasErrors('username');
+    }
+
+    public function test_registration_requires_display_name(): void
+    {
+        $response = $this->post('/register', [
+            'username' => 'testuser',
+            'email' => 'test@example.com',
+            'password' => 'Password1',
+            'password_confirmation' => 'Password1',
+        ]);
+
+        $response->assertSessionHasErrors('display_name');
     }
 }

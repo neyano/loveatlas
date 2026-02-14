@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\ExploreController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Route;
@@ -33,8 +34,15 @@ Route::get('/explore', [ExploreController::class, 'index'])->name('explore');
 // Route::get('/works/{work}', [WorkController::class, 'show'])->name('works.show');
 // Route::get('/tags/{tag:slug}', [TagController::class, 'show'])->name('tags.show');
 
-// --- 認証ページ (Breeze) ---
+// --- 認証ページ (Breeze API ルート) ---
 require __DIR__.'/auth.php';
+
+// --- 認証ページ (ビュー表示) ---
+Route::middleware('guest')->group(function () {
+    Route::view('/login', 'auth.login')->name('login.show');
+    Route::view('/register', 'auth.register')->name('register.show');
+    Route::view('/forgot-password', 'auth.forgot-password')->name('password.request');
+});
 
 // --- 要認証ページ ---
 Route::middleware('auth')->group(function () {
@@ -42,17 +50,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/locations/{location}/visits/create', [VisitController::class, 'create'])
         ->name('visits.create');
 
+    // プロフィール (グループ B)
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('profile.settings');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
     // TODO: Step 5 - セリフ投稿
     // Route::get('/quotes/new', [QuoteController::class, 'create'])->name('quotes.create');
 
-    // TODO: Step 7 - プロフィール
-    // Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    // Route::get('/profile/favorites', [ProfileController::class, 'favorites'])->name('profile.favorites');
-    // Route::get('/profile/visits', [ProfileController::class, 'visits'])->name('profile.visits');
-    // Route::get('/profile/posts', [ProfileController::class, 'posts'])->name('profile.posts');
-    // Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('profile.settings');
-    // Route::get('/users/{user}', [ProfileController::class, 'show'])->name('users.show');
+    // TODO: Step 7 - プロフィール (追加分があればここに)
 });
+
+// --- 公開プロフィール ---
+Route::get('/users/{user}', [ProfileController::class, 'show'])->name('users.show');
 
 // --- 管理者ページ (Group E) ---
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {

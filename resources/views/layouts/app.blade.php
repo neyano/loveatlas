@@ -25,7 +25,7 @@
 
             <nav class="header__nav">
                 <a href="/explore" class="header__link">Explore</a>
-                <div id="header-auth"></div>
+                <div id="header-auth"><header-user></header-user></div>
             </nav>
         </div>
     </header>
