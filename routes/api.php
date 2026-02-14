@@ -105,7 +105,8 @@ Route::prefix('v1')->group(function () {
     });
 
     // 管理者 API (Group E)
-    Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+    // TODO: ログイン機能統合後に middleware(['auth:sanctum', 'admin']) に戻す
+    Route::prefix('admin')->group(function () {
         Route::get('/quotes/pending', [Admin\QuoteController::class, 'pending']);
         Route::put('/quotes/{quote}/approve', [Admin\QuoteController::class, 'approve']);
         Route::put('/quotes/{quote}/reject', [Admin\QuoteController::class, 'reject']);
