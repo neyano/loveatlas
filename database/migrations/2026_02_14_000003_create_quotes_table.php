@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -25,7 +26,9 @@ return new class extends Migration
 
             $table->index('status');
             $table->index('likes_count');
-            $table->fullText(['quote_text', 'character_name', 'scene_description']);
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->fullText(['quote_text', 'character_name', 'scene_description']);
+            }
         });
     }
 
