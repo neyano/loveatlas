@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoveAtlas - プロジェクト概要</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/moon.css">
+    <style>
+        :root {
+            --valentine-pink: #ff6b9d;
+            --valentine-red: #c44569;
+            --valentine-purple: #8b5a8e;
+            --valentine-light-pink: #ffc2d1;
+            --valentine-dark: #4a0e4e;
+        }
+
+        .reveal {
+            background: linear-gradient(135deg, #1a0a1e 0%, #2d1b3d 50%, #1a0a1e 100%);
+        }
+
+        .reveal h1 { 
+            font-size: 2.8em; 
+            color: var(--valentine-light-pink);
+            text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+        }
+
+        .reveal h2 { 
+            font-size: 2em; 
+            color: var(--valentine-pink);
+            border-bottom: 3px solid var(--valentine-pink);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .reveal h3 { 
+            font-size: 1.5em;
+            color: var(--valentine-light-pink);
+        }
+
+        .reveal ul { 
+            font-size: 0.9em; 
+        }
+
+        .reveal table { 
+            font-size: 0.75em; 
+        }
+
+        .reveal table th {
+            background: rgba(255, 107, 157, 0.2);
+            color: var(--valentine-light-pink);
+        }
+
+        .reveal table tr:hover {
+            background: rgba(255, 107, 157, 0.1);
+        }
+
+        .highlight { 
+            color: var(--valentine-pink); 
+            font-weight: bold; 
+        }
+
+        .feature-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+        }
+
+        .feature-box { 
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.15) 0%, rgba(139, 90, 142, 0.15) 100%);
+            padding: 20px; 
+            border-radius: 15px;
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--valentine-pink);
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .term-box { 
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.2) 0%, rgba(139, 90, 142, 0.2) 100%);
+            padding: 15px; 
+            border-left: 5px solid var(--valentine-pink); 
+            margin: 15px 0; 
+            font-size: 0.75em; 
+            text-align: left;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--valentine-red) 0%, var(--valentine-purple) 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(255, 107, 157, 0.3);
+        }
+
+        .reveal .slides section {
+            text-align: center;
+        }
+
+        .reveal pre {
+            background: rgba(255, 107, 157, 0.1);
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 10px;
+        }
+
+        .reveal code {
+            color: var(--valentine-light-pink);
+        }
+
+        /* ハートのデコレーション */
+        .heart-decoration {
+            display: inline-block;
+            color: var(--valentine-pink);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* プログレスバーの色 */
+        .reveal .progress {
+            background: rgba(255, 107, 157, 0.2);
+        }
+
+        .reveal .progress span {
+            background: var(--valentine-pink);
+        }
+
+        /* スライド番号の色 */
+        .reveal .slide-number {
+            color: var(--valentine-light-pink);
+            background: rgba(255, 107, 157, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- スライド1: タイトル -->
+            <section>
+                <h3>「あの日僕たちは何を生み出そうとしたのか…」</h3>
+                <h1>LoveAtlas</h1>
+                <h3>地図 × 名セリフ<br>コミュニティプラットフォーム</h3>
+                <p style="margin-top: 60px; font-size: 1em; color: var(--valentine-light-pink);">
+                    作品の世界を、地図で旅する
+                </p>
+                <p style="margin-top: 20px; font-size: 0.7em; color: var(--valentine-pink);">
+                    2026年2月 TechGuild ハッカソン プロジェクト概要
+                </p>
+            </section>
+
+            <!-- スライド2: プロジェクト背景 -->
+            <section>
+                <h2>プロジェクト背景</h2>
+                <div style="text-align: left; margin: 40px 60px;">
+                    <h3>課題</h3>
+                    <ul style="line-height: 2;">
+                        <li>「聖地巡礼」は広く浸透している</li>
+                        <li>しかし、<span class="highlight">作品と場所を体系的に探索できるサービス</span>が少ない</li>
+                        <li>旅行計画時・現地訪問時に、その場所の作品の言葉を<span class="highlight">手軽に知る手段がない</span></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- スライド3: コンセプト -->
+            <section>
+                <h2>コンセプト</h2>
+                <div style="margin: 40px 0;">
+                    <div class="hero-gradient">
+                        <h3 style="color: white; margin-bottom: 20px; font-size: 1.3em;">
+                            地図上の場所と名セリフを結びつけ、<br>
+                            ユーザーが場所を通じて<br>
+                            作品の世界に触れられる体験を提供
+                        </h3>
+                    </div>
+                    <p style="margin-top: 30px; font-size: 0.9em; color: var(--valentine-light-pink);">
+                        映画 | アニメ | 小説 | ゲーム
+                    </p>
+                </div>
+            </section>
+
+            <!-- スライド4: ターゲットユーザー -->
+            <section>
+                <h2>ターゲットユーザー</h2>
+                <div class="feature-grid" style="margin: 30px 40px; font-size: 0.85em;">
+                    <div class="feature-box">
+                        <h3>旅行好き</h3>
+                        <p>旅先で新しい視点や発見を得たい</p>
+                    </div>
+                    <div class="feature-box">
+                        <h3>作品ファン</h3>
+                        <p>好きな作品の聖地を巡りたい・共有したい</p>
+                    </div>
+                    <div class="feature-box">
+                        <h3>聖地巡礼者</h3>
+                        <p>訪問記録を残し、他のファンと共有したい</p>
+                    </div>
+                    <div class="feature-box">
+                        <h3>カジュアルユーザー</h3>
+                        <p>地図を眺めて名言に偶然出会いたい</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- スライド5: システム構成 -->
+            <section>
+                <h2>システム構成</h2>
+                <table style="margin: 30px auto; width: 80%;">
+                    <tr>
+                        <td style="text-align: right; padding: 10px;"><strong>種別</strong></td>
+                        <td style="padding: 10px;">Webアプリケーション</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right; padding: 10px;"><strong>バックエンド</strong></td>
+                        <td style="padding: 10px;">Laravel 11.x (PHP 8.2)</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right; padding: 10px;"><strong>サーバー</strong></td>
+                        <td style="padding: 10px;">XAMPP<br><span style="font-size: 0.8em;">(Apache + MariaDB 10.4)</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right; padding: 10px;"><strong>フロントエンド</strong></td>
+                        <td style="padding: 10px;">Blade + Vue 3 + Vite</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right; padding: 10px;"><strong>地図</strong></td>
+                        <td style="padding: 10px;">Leaflet + OpenStreetMap</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right; padding: 10px;"><strong>対応デバイス</strong></td>
+                        <td style="padding: 10px;">PC / タブレット / スマートフォン</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- スライド5.5: 技術用語解説（サーバー） -->
+            <section>
+                <h2>技術用語解説：サーバー環境</h2>
+                <div style="text-align: left; margin: 20px 60px; font-size: 0.75em;">
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 10px;">Apache（アパッチ）とは？</h3>
+                        <p>Webサーバーソフトウェア。ブラウザからのリクエストを受け取り、Webページを配信する役割。世界で最も使われているWebサーバーの1つ。</p>
+                    </div>
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 10px;">MariaDB（マリアDB）とは？</h3>
+                        <p>データベース管理システム。MySQLから派生したオープンソースのデータベース。<br>
+                        <strong>MySQLとの違い：</strong>元々は同じだったが、開発元が異なる。機能はほぼ同じで互換性が高い。MariaDBの方が新機能の追加が早い傾向。XAMPPには最初からMariaDBが入っている。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- スライド5.6: 技術用語解説（地図） -->
+            <section>
+                <h2>技術用語解説：地図システム</h2>
+                <div style="text-align: left; margin: 20px 60px; font-size: 0.7em;">
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 10px;">Leaflet + OpenStreetMap とは？</h3>
+                        <p><strong>Leaflet：</strong>地図を表示するためのJavaScriptライブラリ（プログラムの部品集）<br>
+                        <strong>OpenStreetMap：</strong>誰でも自由に使える世界地図データ（Wikipediaの地図版）</p>
+                    </div>
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 10px;">なぜGoogle Mapsではない？</h3>
+                        <table style="width: 100%; margin-top: 10px;">
+                            <tr>
+                                <th style="padding: 5px; border-bottom: 1px solid var(--valentine-pink);"></th>
+                                <th style="padding: 5px; border-bottom: 1px solid var(--valentine-pink);">Google Maps</th>
+                                <th style="padding: 5px; border-bottom: 1px solid var(--valentine-pink);">Leaflet + OSM</th>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><strong>費用</strong></td>
+                                <td style="padding: 5px;">月200ドル分まで無料、超過分は課金<br>例：地図を30,000回表示すると、約210ドル相当 → 超過分の10ドルが課金される</td>
+                                <td style="padding: 5px;">完全無料</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><strong>カスタマイズ</strong></td>
+                                <td style="padding: 5px;">制限あり</td>
+                                <td style="padding: 5px;">自由度が高い</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><strong>データ</strong></td>
+                                <td style="padding: 5px;">Google所有</td>
+                                <td style="padding: 5px;">オープンデータ</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- スライド6: 主要機能（1/2） -->
+            <section>
+                <h2>主要機能（1/2）</h2>
+                <div style="text-align: left; margin: 20px 60px; font-size: 0.85em;">
+                    <h3>地図機能</h3>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>操作できる地図</strong>：ドラッグで移動、ピンチで拡大縮小できる動的な地図</li>
+                        <li><strong>ピン表示</strong>：作品タイプ別に色分け（映画=青、アニメ=赤...）</li>
+                        <li><strong>クラスタリング</strong>：近い場所のピンをまとめて表示（後述）</li>
+                        <li><strong>ポップアップ</strong>：ピンをクリックするとセリフ概要が表示される</li>
+                    </ul>
+                    <h3 style="margin-top: 20px;">投稿機能</h3>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>セリフ投稿</strong>：作品・場所・キャラクターを紐付け</li>
+                        <li><strong>自由な投稿</strong>：アニメ・映画に限らず、名言や思い出の写真も投稿可能</li>
+                        <li><strong>承認フロー</strong>：管理者が確認後に地図に公開（後述）</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- スライド6.5: 用語解説（インタラクティブ・承認フロー） -->
+            <section>
+                <h2>用語解説：地図機能</h2>
+                <div style="text-align: left; margin: 10px 40px; font-size: 0.65em; max-height: 580px; overflow-y: auto;">
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 8px; font-size: 1.2em;">インタラクティブ地図とは？</h3>
+                        <p style="margin: 0;">ユーザーが操作できる地図のこと。<br>
+                        <strong>できること：</strong>ドラッグで移動、ピンチ/ホイールで拡大縮小、ピンをクリックして情報表示<br>
+                        <strong>対義語：</strong>静的な画像の地図（操作できない）</p>
+                    </div>
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 8px; font-size: 1.2em;">承認フローとは？</h3>
+                        <p style="margin: 0;">投稿されたセリフを管理者がチェックしてから公開する仕組み。<br>
+                        <strong>流れ：</strong>①ユーザーが投稿 → ②管理者が確認 → ③承認されたら地図上に表示<br>
+                        <strong>目的：</strong>スパムや不適切コンテンツの防止</p>
+                    </div>
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 8px; font-size: 1.2em;">クラスタリングとは？</h3>
+                        <p style="margin: 0;">近くにある複数のピン（マーカー）を1つにまとめて表示する機能。<br>
+                        <strong>例：</strong>東京に100個のピンがある場合、遠くから見ると「100」という数字の丸印1つで表示。拡大すると個別のピンに分かれる。<br>
+                        <strong>メリット：</strong>地図が見やすくなり、動作が軽くなる</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- スライド7: 主要機能（2/2） -->
+            <section>
+                <h2>主要機能（2/2）</h2>
+                <div style="text-align: left; margin: 20px 60px; font-size: 0.85em;">
+                    <h3>インタラクション/ソーシャル</h3>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>いいね</strong>：ボタンを押すたびに追加・解除が切り替わる</li>
+                        <li><strong>お気に入り</strong>：気に入ったセリフを保存</li>
+                        <li><strong>訪問記録</strong>：日付・メモ・評価・写真を記録</li>
+                    </ul>
+                    <h3 style="margin-top: 20px;">探索機能</h3>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>横断検索</strong>：セリフ・作品・場所を一度に検索（後述）</li>
+                        <li><strong>Explore</strong>：人気・新着セリフの一覧</li>
+                        <li><strong>タグ機能</strong>：タグ別一覧表示</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- スライド7.5: 用語解説（横断検索・バウンディングボックス） -->
+            <section>
+                <h2>用語解説：探索機能</h2>
+                <div style="text-align: left; margin: 20px 60px; font-size: 0.75em;">
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 10px;">横断検索とは？</h3>
+                        <p>複数のカテゴリを一度に検索すること。<br>
+                        <strong>例：</strong>「東京」と検索すると、セリフ・作品・場所の全てから「東京」を含むものを表示<br>
+                        <strong>通常の検索：</strong>セリフだけ、作品だけ、など1カテゴリずつ検索</p>
+                    </div>
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 10px;">バウンディングボックス取得とは？</h3>
+                        <p>今画面に表示されている地図の範囲（北端・南端・東端・西端）を取得すること。<br>
+                        <strong>目的：</strong>表示範囲内のデータだけを取得することで高速化<br>
+                        <strong>例：</strong>東京を表示中なら東京周辺のセリフだけ取得。大阪のデータは取得しない</p>
+                    </div>
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 10px;">300msデバウンスとは？</h3>
+                        <p>地図を動かしてから0.3秒待ってからデータを取得する仕組み。<br>
+                        <strong>理由：</strong>ドラッグ中に何度もデータ取得すると重くなるため、動きが止まってから取得する</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- スライド8: データ構造 -->
+            <section>
+                <h2>データ構造</h2>
+                <div style="font-size: 1.25em; margin: 20px 40px;">
+                    <pre style="background: rgba(255,107,157,0.1); padding: 20px; border-radius: 10px; text-align: left;"><code>users ──1:N──> quotes      (1人のユーザーが複数のセリフを投稿)
+works ──1:N──> quotes      (1つの作品に複数のセリフが紐づく)
+locations ──1:N──> quotes  (1つの場所に複数のセリフが紐づく)
+users ──1:N──> favorites   (1人のユーザーが複数をお気に入り登録)
+users ──1:N──> visits      (1人のユーザーが複数の場所を訪問記録)
+users ──1:N──> votes       (1人のユーザーが複数にいいね)
+quotes <──N:M──> tags      (セリフとタグは多対多の関係)</code></pre>
+                </div>
+            </section>
+
+            <!-- スライド8.5: 用語解説（データ関係図） -->
+            <section>
+                <h2>用語解説：データ関係図の見方</h2>
+                <div style="text-align: left; margin: 20px 60px; font-size: 0.7em;">
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 10px;">1:N（1対多）とは？</h3>
+                        <p><strong>意味：</strong>1つに対して複数が紐づく関係<br>
+                        <strong>例：</strong>users ──1:N──> quotes<br>
+                        → 1人のユーザーは複数のセリフを投稿できる<br>
+                        → 1つのセリフは1人のユーザーにのみ属する</p>
+                    </div>
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 10px;">N:M（多対多）とは？</h3>
+                        <p><strong>意味：</strong>どちらも複数が紐づく関係<br>
+                        <strong>例：</strong>quotes <──N:M──> tags<br>
+                        → 1つのセリフに複数のタグを付けられる（例：「感動」「恋愛」「青春」）<br>
+                        → 1つのタグは複数のセリフに使われる（例：「感動」タグは100個のセリフに使用）</p>
+                    </div>
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 10px;">矢印の向きの意味</h3>
+                        <p>users ──> quotes：ユーザーからセリフへの矢印 = ユーザーがセリフを「所有」する<br>
+                        quotes <──> tags：双方向の矢印 = お互いに複数紐づける</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- スライド9: 初期データ -->
+            <section>
+                <h2>初期データ</h2>
+                <div style="margin: 30px 60px;">
+                    <p style="font-size: 0.9em; margin-bottom: 30px;">最初のリリース時にサービスが空にならないよう、以下を投入予定</p>
+                    <table style="font-size: 0.75em; margin: 0 auto;">
+                        <thead>
+                            <tr>
+                                <th>カテゴリ</th>
+                                <th>件数目安</th>
+                                <th>例</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ジブリ映画</td>
+                                <td>5-10作品<br>15-30セリフ</td>
+                                <td>千と千尋の神隠し(道後温泉)<br>もののけ姫(屋久島)</td>
+                            </tr>
+                            <tr>
+                                <td>新海誠作品</td>
+                                <td>2-3作品<br>10-15セリフ</td>
+                                <td>君の名は。(飛騨/須賀神社)<br>天気の子(田端駅)</td>
+                            </tr>
+                            <tr>
+                                <td>有名映画</td>
+                                <td>5-10作品<br>10-20セリフ</td>
+                                <td>ローマの休日(スペイン広場)<br>ラ・ラ・ランド(ロサンゼルス)</td>
+                            </tr>
+                            <tr>
+                                <td>アニメ聖地</td>
+                                <td>5-10作品<br>10-20セリフ</td>
+                                <td>スラムダンク(鎌倉高校前)<br>ゆるキャン△(山梨・静岡（富士五湖周辺）)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- スライド9.5: 用語解説（MVP） -->
+            <section>
+                <h2>用語解説：MVPとは？</h2>
+                <div style="text-align: left; margin: 40px 80px; font-size: 0.85em;">
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 10px;">MVP（Minimum Viable Product）</h3>
+                        <p><strong>意味：</strong>必要最小限の機能を持った製品<br>
+                        <strong>日本語訳：</strong>実用最小限の製品<br>
+                        <strong>目的：</strong>全機能を作る前に、最小限の機能でリリースしてユーザーの反応を見る<br>
+                        <strong>例：</strong>LoveAtlasのMVPは「地図表示」「セリフ投稿」「検索」など基本機能のみ。AR機能や多言語対応は将来の拡張</p>
+                    </div>
+                    <div class="term-box">
+                        <h3 style="margin-bottom: 10px;">MVPリリース時とは？</h3>
+                        <p>最初に公開する時点のこと。この時点では基本機能のみ実装されており、将来的に機能を追加していく</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- スライド10: セキュリティ -->
+            <section>
+                <h2>セキュリティ対策</h2>
+                <div style="text-align: left; margin: 30px 60px; font-size: 0.75em;">
+                    <ul style="line-height: 1.8;">
+                        <li><strong>認証システム</strong>：ユーザーのパスワードを暗号化して保存</li>
+                        <li><strong>不正アクセス対策</strong>：ログイン試行回数を制限（1分間に5回まで）</li>
+                        <li><strong>データベース攻撃対策</strong>：悪意のあるSQL文による攻撃を防止</li>
+                        <li><strong>スクリプト攻撃対策</strong>：悪意のあるJavaScriptの実行を防止</li>
+                        <li><strong>なりすまし対策</strong>：他人のふりをした不正な操作を防止</li>
+                        <li><strong>API利用制限</strong>：短時間の大量アクセスを制限（1分間に60回まで）</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- スライド10.5: セキュリティ用語解説 -->
+            <section>
+                <h2>セキュリティ用語解説</h2>
+                <div style="text-align: left; margin: 10px 40px; font-size: 0.58em; max-height: 580px; overflow-y: auto;">
+                    <div class="term-box" style="margin: 8px 0; padding: 10px;">
+                        <h3 style="margin-bottom: 5px; font-size: 1.15em;">Sanctum + bcrypt ハッシュ（パスワード暗号化）</h3>
+                        <p style="margin: 0; line-height: 1.4;">パスワードを暗号化して保存する仕組み。万が一データベースが盗まれても、元のパスワードは分からない。bcryptは一方向暗号化（元に戻せない）</p>
+                    </div>
+                    <div class="term-box" style="margin: 8px 0; padding: 10px;">
+                        <h3 style="margin-bottom: 5px; font-size: 1.15em;">SQLインジェクション対策（Eloquent ORM）</h3>
+                        <p style="margin: 0; line-height: 1.4;">データベースへの不正な命令文を防ぐ。<strong>攻撃例：</strong>ログインフォームに「' OR '1'='1」と入力して全データを盗む → Eloquent ORMが自動で無害化</p>
+                    </div>
+                    <div class="term-box" style="margin: 8px 0; padding: 10px;">
+                        <h3 style="margin-bottom: 5px; font-size: 1.15em;">XSS対策（クロスサイトスクリプティング）</h3>
+                        <p style="margin: 0; line-height: 1.4;">悪意のあるJavaScriptを埋め込まれる攻撃を防ぐ。<br><strong>攻撃例：</strong>コメント欄に「&lt;script&gt;悪意のあるコード&lt;/script&gt;」 → Bladeが自動でエスケープ（無害化）</p>
+                    </div>
+                    <div class="term-box" style="margin: 8px 0; padding: 10px;">
+                        <h3 style="margin-bottom: 5px; font-size: 1.15em;">CSRF対策（クロスサイトリクエストフォージェリ）</h3>
+                        <p style="margin: 0; line-height: 1.4;">他人のふりをして不正な操作をする攻撃を防ぐ。<strong>攻撃例：</strong>罠サイトを踏むと勝手に投稿される → トークン（合言葉）で本人確認</p>
+                    </div>
+                    <div class="term-box" style="margin: 8px 0; padding: 10px;">
+                        <h3 style="margin-bottom: 5px; font-size: 1.15em;">レート制限</h3>
+                        <p style="margin: 0; line-height: 1.4;">短時間の大量アクセスを制限。<strong>理由：</strong>パスワード総当たり攻撃やサーバー負荷攻撃を防ぐ。例：ログイン5回/分、API60回/分</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- スライド11: 開発体制 -->
+            <section>
+                <h2>開発体制</h2>
+                <div style="margin: 30px 60px; font-size: 0.8em;">
+                    <h3>5人並行開発</h3>
+                    <table style="margin: 20px auto; width: 90%;">
+                        <tr>
+                            <td style="padding: 8px;"><strong>グループA</strong></td>
+                            <td style="padding: 8px;">地図・位置情報（Leaflet, クラスタリング）</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;"><strong>グループB</strong></td>
+                            <td style="padding: 8px;">認証・プロフィール（Sanctum）</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;"><strong>グループC</strong></td>
+                            <td style="padding: 8px;">セリフ・作品（投稿CRUD）</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;"><strong>グループD</strong></td>
+                            <td style="padding: 8px;">ソーシャル機能・探索（いいね、検索）</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;"><strong>グループE</strong></td>
+                            <td style="padding: 8px;">管理機能・品質保証（承認、テスト）</td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 20px;">共通基盤構築後、各グループが独立して開発可能</p>
+                </div>
+            </section>
+
+            <!-- スライド12: 技術的特徴 -->
+            <section>
+                <h2>技術的特徴</h2>
+                <div class="feature-grid" style="margin: 30px 60px; font-size: 0.75em;">
+                    <div class="feature-box">
+                        <h3>レスポンシブ設計</h3>
+                        <p>PC / タブレット / スマホ対応<br>モバイルファースト</p>
+                    </div>
+                    <div class="feature-box">
+                        <h3>リアルタイム更新</h3>
+                        <p>いいね・お気に入りの<br>非同期API更新</p>
+                    </div>
+                    <div class="feature-box">
+                        <h3>効率的な地図表示</h3>
+                        <p>表示範囲内のデータのみ取得<br>300msデバウンスで高速化</p>
+                    </div>
+                    <div class="feature-box">
+                        <h3>高速検索</h3>
+                        <p>MariaDB 全文検索<br>横断検索対応</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- スライド13: MVP要件 -->
+            <section>
+                <h2>MVP要件</h2>
+                <div style="margin: 40px 80px; font-size: 0.85em; text-align: left;">
+                    <h3>性能目標</h3>
+                    <ul style="line-height: 1.8;">
+                        <li>ページ読み込み：初回3秒以内、2回目以降1秒以内</li>
+                        <li>API応答：200ミリ秒以内（地図データ）</li>
+                        <li>同時接続：50ユーザー（開発環境想定）</li>
+                    </ul>
+                    <h3 style="margin-top: 25px;">データ規模</h3>
+                    <ul style="line-height: 1.8;">
+                        <li>セリフ：10,000件</li>
+                        <li>ユーザー：1,000人</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- スライド14: 今後の展望 -->
+            <section>
+                <h2>今後の展望</h2>
+                <div style="text-align: left; margin: 30px 80px; font-size: 0.85em;">
+                    <h3>将来的な拡張案</h3>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>多言語対応</strong>：英語・中国語など</li>
+                        <li><strong>モバイルアプリ化</strong>：位置情報と連動</li>
+                        <li><strong>AI推薦</strong>：ユーザーの嗜好に基づいた聖地提案</li>
+                        <li><strong>イベント連携</strong>：聖地巡礼ツアー情報</li>
+                        <li><strong>統計機能</strong>：人気の聖地ランキング</li>
+                        <li><strong>AR機能</strong>：現地でセリフをAR表示</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- スライド15: まとめ -->
+            <section>
+                <h2>まとめ</h2>
+                <div style="margin: 40px 60px;">
+                    <div class="hero-gradient">
+                        <h3 style="color: white; margin-bottom: 20px;">LoveAtlas</h3>
+                        <p style="color: white; font-size: 0.9em; line-height: 1.8;">
+                            地図 × 名セリフで、作品の世界を旅する<br>
+                            新しい聖地巡礼体験を提供する<br>
+                            コミュニティ駆動型プラットフォーム
+                        </p>
+                    </div>
+                    <p style="margin-top: 40px; font-size: 1.2em; color: var(--valentine-pink); font-weight: bold;">
+                        場所を通じて、作品と出会う
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            slideNumber: true,
+            progress: true,
+            center: true,
+            width: 1280,
+            height: 720,
+            margin: 0.1,
+            minScale: 0.2,
+            maxScale: 2.0
+        });
+    </script>
+</body>
+</html>
